@@ -1,9 +1,10 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
+
 
 .logo {
   height: 6em;
@@ -39,4 +40,95 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.main-container {
+  width: 100%;
+  max-width: 100%;
+  min-height: 80vh;
+  padding: 2rem;
+  margin: 0;
+}
+
+main .container {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+footer.container-fluid {
+  width: 100%;
+  padding: 1rem 0;
+  background-color: #f8f9fa;
+  text-align: center;
+  border-top: 1px solid #e7e7e7;
+  margin-top: 2rem;
+}
+
+form {
+  background-color: #f8f9fa;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+form .form-group {
+  margin-bottom: 1rem;
+}
+
+h1.display-4 {
+  color: #333;
+}
+
+.lead {
+  max-width: 700px;
+  margin: 0 auto;
+  color: #555;
+}
+
+.btn-lg {
+  min-width: 180px;
+}
+
+.gestor-recetas {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.form-receta {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.form-receta input,
+.form-receta textarea {
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.form-receta button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-receta button:hover {
+  background-color: #45a049;
+}
+
+.lista-recetas ul {
+  list-style: none;
+  padding: 0;
+}
+
+.lista-recetas li {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #f9f9f9;
 }
