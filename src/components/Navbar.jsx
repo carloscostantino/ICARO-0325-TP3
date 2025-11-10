@@ -7,8 +7,8 @@ export default function Navbar() {
         <Link to="/" className="navbar-brand text-white fw-bold">Mi Sitio</Link>
         <div>
           <Link to="/" className="text-white me-3">Inicio</Link>
-          <Link to="/about" className="text-white me-3">Sobre mí</Link>
-          <Link to="/recipes" className="text-white">Recetas API</Link>
+          <Link to="/recipeManager" className="text-white me-3">Gestor de Recetas</Link>
+          <Link to="/recipes" className="text-white">Recetas Externas</Link>
           <Link to="/contact" className="text-white me-3">Contacto</Link>
         </div>
       </div>

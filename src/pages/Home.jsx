@@ -15,7 +15,7 @@ function Home() {
           <Link to="/recipes" className="btn btn-primary btn-lg">
             Ver Recetas externas
           </Link>
-          <Link to="/about" className="btn btn-outline-secondary btn-lg">
+          <Link to="/recipe-manager" className="btn btn-outline-secondary btn-lg">
             Gestionar recetas propias
           </Link>
         </div>

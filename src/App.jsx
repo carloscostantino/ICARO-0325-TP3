@@ -13,7 +13,7 @@ function App() {
         <nav>
           <ul>
             <li><Link to="/">Inicio</Link></li>
-            <li><Link to="/RecipeManager">Gestor de Recetas</Link></li>
+            <li><Link to="/recipe-manager">Gestor de Recetas</Link></li>
             <li><Link to="/recipes">Recetas Externas</Link></li>
             <li><Link to="/contact">Contacto</Link></li>
           </ul>
