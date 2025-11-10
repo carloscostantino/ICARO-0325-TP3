@@ -1,9 +1,13 @@
+import AddRecipe from "../components/AddRecipe";
+import RecipeList from "../components/RecipeList";
+
 function About() {
   return (
-    <section>
-      <h2>Sobre mí</h2>
-      <p>Esta es la página "Sobre mí", donde cuento más sobre el proyecto.</p>
-    </section>
+    <div>
+      <h2>Gestor de Recetas</h2>
+      <AddRecipe />
+      <RecipeList />
+    </div>
   );
 }
 
