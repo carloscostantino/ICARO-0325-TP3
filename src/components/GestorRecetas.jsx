@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useRecetasStore from "../store/useRecetasStore";
+import "./GestorRecetas.css"; // 👈 agregamos el CSS
 
 function GestorRecetas() {
   const { recetas, agregarReceta, eliminarReceta, editarReceta } = useRecetasStore();
@@ -11,7 +12,6 @@ function GestorRecetas() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!titulo.trim() || !ingredientes.trim() || !pasos.trim()) return;
 
     const nuevaReceta = {
@@ -41,10 +41,10 @@ function GestorRecetas() {
   };
 
   return (
-    <section>
+    <section className="gestor-recetas">
       <h2>{editando ? "Editar Receta" : "Agregar Nueva Receta"}</h2>
 
-      <form onSubmit={handleSubmit} className="contact-form">
+      <form onSubmit={handleSubmit} className="receta-form">
         <input
           type="text"
           placeholder="Título de la receta"
@@ -61,24 +61,28 @@ function GestorRecetas() {
           value={pasos}
           onChange={(e) => setPasos(e.target.value)}
         />
-        <button type="submit">{editando ? "Guardar Cambios" : "Agregar"}</button>
+        <button type="submit" className="btn-primary">
+          {editando ? "Guardar Cambios" : "Agregar Receta"}
+        </button>
       </form>
 
       <h2>Mis Recetas</h2>
       {recetas.length === 0 ? (
-        <p>No hay recetas agregadas aún.</p>
+        <p className="no-recetas">No hay recetas agregadas aún.</p>
       ) : (
-        <ul>
+        <div className="lista-recetas">
           {recetas.map((r) => (
-            <li key={r.id}>
+            <div key={r.id} className="tarjeta-receta">
               <h3>{r.titulo}</h3>
               <p><strong>Ingredientes:</strong> {r.ingredientes}</p>
               <p><strong>Pasos:</strong> {r.pasos}</p>
-              <button onClick={() => handleEdit(r)}>Editar</button>
-              <button onClick={() => eliminarReceta(r.id)}>Eliminar</button>
-            </li>
+              <div className="acciones">
+                <button onClick={() => handleEdit(r)} className="btn-edit">Editar</button>
+                <button onClick={() => eliminarReceta(r.id)} className="btn-delete">Eliminar</button>
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </section>
   );
