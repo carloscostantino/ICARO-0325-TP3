@@ -1,97 +1,80 @@
 import { useState } from "react";
+import { useForm } from "../hooks/useForm";
+import "./Contact.css";
 
 function Contact() {
-  const [formData, setFormData] = useState({
+  const { values, handleChange, resetForm } = useForm({
     name: "",
     email: "",
     message: "",
   });
 
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.name && formData.email && formData.message) {
-      setSubmitted(true);
-      setFormData({ name: "", email: "", message: "" });
-    } else {
-      alert("Por favor, completá todos los campos antes de enviar.");
-    }
+    setSuccessMessage(`✅ Mensaje enviado correctamente por ${values.name}.`);
+    resetForm();
+
+    // Oculta el mensaje después de 3 segundos
+    setTimeout(() => {
+      setSuccessMessage("");
+    }, 3000);
   };
 
   return (
-    <div className="container-fluid py-5">
-      <h1 className="mb-4 text-center">Contacto</h1>
+    <div className="contact-container">
+      <h2>Contacto</h2>
+      <p className="contact-text">
+        Si querés ponerte en contacto con nosotros, completá el siguiente formulario.
+        Te responderemos a la brevedad.
+      </p>
 
-
-      {!submitted ? (
-        <form
-          onSubmit={handleSubmit}
-          className="mx-auto"
-          style={{ maxWidth: "600px" }}
-        >
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label fw-bold">
-              Nombre
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              className="form-control"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Ingresá tu nombre"
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label fw-bold">
-              Correo electrónico
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className="form-control"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="nombre@correo.com"
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="message" className="form-label fw-bold">
-              Mensaje
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              className="form-control"
-              rows="4"
-              value={formData.message}
-              onChange={handleChange}
-              placeholder="Escribí tu mensaje..."
-            />
-          </div>
-
-          <button type="submit" className="btn btn-primary w-100">
-            Enviar mensaje
-          </button>
-        </form>
-      ) : (
-        <div className="alert alert-success text-center mt-4" role="alert">
-          ¡Gracias por tu mensaje! Te responderemos pronto.
+      {successMessage && (
+        <div className="success-message">
+          {successMessage}
         </div>
       )}
+
+      <form onSubmit={handleSubmit} className="contact-form">
+        <div className="form-group">
+          <label htmlFor="name">Nombre</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            value={values.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="email">Correo Electrónico</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            value={values.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="message">Mensaje</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            value={values.message}
+            onChange={handleChange}
+            required
+          ></textarea>
+        </div>
+
+        <button type="submit" className="submit-btn">Enviar</button>
+      </form>
     </div>
   );
 }
