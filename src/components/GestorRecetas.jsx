@@ -1,43 +1,55 @@
 import { useState } from "react";
+import useRecetasStore from "../store/useRecetasStore";
 
 function GestorRecetas() {
-  const [recetas, setRecetas] = useState([]);
-  const [nombre, setNombre] = useState("");
+  const { recetas, agregarReceta, eliminarReceta, editarReceta } = useRecetasStore();
+
+  const [titulo, setTitulo] = useState("");
   const [ingredientes, setIngredientes] = useState("");
   const [pasos, setPasos] = useState("");
+  const [editando, setEditando] = useState(null);
 
-  const agregarReceta = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!nombre || !ingredientes || !pasos) return;
+
+    if (!titulo.trim() || !ingredientes.trim() || !pasos.trim()) return;
 
     const nuevaReceta = {
-      id: Date.now(),
-      nombre,
+      id: editando ? editando.id : Date.now(),
+      titulo,
       ingredientes,
       pasos,
     };
 
-    setRecetas([...recetas, nuevaReceta]);
-    setNombre("");
+    if (editando) {
+      editarReceta(nuevaReceta);
+      setEditando(null);
+    } else {
+      agregarReceta(nuevaReceta);
+    }
+
+    setTitulo("");
     setIngredientes("");
     setPasos("");
   };
 
-  const eliminarReceta = (id) => {
-    setRecetas(recetas.filter((r) => r.id !== id));
+  const handleEdit = (receta) => {
+    setEditando(receta);
+    setTitulo(receta.titulo);
+    setIngredientes(receta.ingredientes);
+    setPasos(receta.pasos);
   };
 
   return (
-    <div className="gestor-recetas">
-      <h2>Gestor de Recetas</h2>
-      <p>Agregá, organizá y visualizá tus recetas favoritas.</p>
+    <section>
+      <h2>{editando ? "Editar Receta" : "Agregar Nueva Receta"}</h2>
 
-      <form onSubmit={agregarReceta} className="form-receta">
+      <form onSubmit={handleSubmit} className="contact-form">
         <input
           type="text"
-          placeholder="Nombre de la receta"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
+          placeholder="Título de la receta"
+          value={titulo}
+          onChange={(e) => setTitulo(e.target.value)}
         />
         <textarea
           placeholder="Ingredientes"
@@ -49,27 +61,26 @@ function GestorRecetas() {
           value={pasos}
           onChange={(e) => setPasos(e.target.value)}
         />
-        <button type="submit">Agregar Receta</button>
+        <button type="submit">{editando ? "Guardar Cambios" : "Agregar"}</button>
       </form>
 
-      {recetas.length > 0 ? (
-        <div className="lista-recetas">
-          <h3>Mis Recetas</h3>
-          <ul>
-            {recetas.map((r) => (
-              <li key={r.id}>
-                <h4>{r.nombre}</h4>
-                <p><strong>Ingredientes:</strong> {r.ingredientes}</p>
-                <p><strong>Pasos:</strong> {r.pasos}</p>
-                <button onClick={() => eliminarReceta(r.id)}>Eliminar</button>
-              </li>
-            ))}
-          </ul>
-        </div>
+      <h2>Mis Recetas</h2>
+      {recetas.length === 0 ? (
+        <p>No hay recetas agregadas aún.</p>
       ) : (
-        <p>No hay recetas agregadas todavía.</p>
+        <ul>
+          {recetas.map((r) => (
+            <li key={r.id}>
+              <h3>{r.titulo}</h3>
+              <p><strong>Ingredientes:</strong> {r.ingredientes}</p>
+              <p><strong>Pasos:</strong> {r.pasos}</p>
+              <button onClick={() => handleEdit(r)}>Editar</button>
+              <button onClick={() => eliminarReceta(r.id)}>Eliminar</button>
+            </li>
+          ))}
+        </ul>
       )}
-    </div>
+    </section>
   );
 }
 
